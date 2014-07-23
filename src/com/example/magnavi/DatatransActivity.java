@@ -29,6 +29,13 @@ public class DatatransActivity extends Activity
   private InputStream blueStream;    //输入流，用来接收蓝牙数据
   private OutputStream outstream;
   myHandler mmhandler;
+  String rec="";
+  String end="";
+  private static String readMessage="";
+
+
+
+  
   public boolean flag_rec_thread=false;
   public static byte[] result = new byte[1024];
 
@@ -293,28 +300,29 @@ public class DatatransActivity extends Activity
 		public void run() {
 			
 			while (!currentThread().isInterrupted()) {
-				String rec="";
 				if(flag_rec_thread)
 				{
 					try{
 						blueStream = _socket.getInputStream();
 						int num;
+
 						byte[] buffer =new byte[1024];
 						num = blueStream.read(buffer);
-						for(int j =0;j<12;j++){
 							for(int i = 0 ; i < num; i++)
 							{ 		  
 							//readMessage[i]=String.format("%2x", bytes[i-count]);	
 							rec+=Integer.toHexString(buffer[i]&0xff);
+//							rec += (buffer[i]&0xff)+"";					
 							}
-						}
-						
-						
-						
+							
+							readMessage = new String(buffer, 0, num);
+//							处理数据
+							dealwithstring(readMessage,num);
 						Message message = mmhandler.obtainMessage();  
 			            message.what = 0x123;  
-			            message.obj = rec;  
-			           
+
+			            message.obj = end;  
+
 			            mmhandler.sendMessage(message);  
 					}catch(IOException e) {  
 		                break;  
@@ -348,4 +356,12 @@ public class DatatransActivity extends Activity
         }
         return bytes;
     }
+	
+	private String dealwithstring(String readMessage,int num){
+		int index;
+		index = readMessage.indexOf("f0f0f1");
+		end = readMessage.substring(index+6, index+8);
+		return end;
+	}
+	
 }

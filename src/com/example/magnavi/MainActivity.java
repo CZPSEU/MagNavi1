@@ -50,8 +50,8 @@ public class MainActivity extends Activity
 	public void onEnter(View v)
 	{
 //		Toast.makeText(this, "绑定数据流成功", Toast.LENGTH_SHORT).show();
-		String name = "admin";
-		String password = "1234";
+		String name = "A";
+		String password = "1";
 		nameedit = (EditText) findViewById(R.id.nameedit);
 		passwordedit = (EditText) findViewById(R.id.passwordedit);
 		if(nameedit.getText().toString().equals(name) && passwordedit.getText().toString().equals(password)){
