@@ -209,7 +209,7 @@ public class DatatransActivity extends Activity
 	    for (int i = 0; i < SERIES_NR; i++) {
 	      series1 = new TimeSeries("Demo series " + (i + 1));
 	      for (int k = 0; k < nr; k++) {
-	        series1.add(new Date(value+k*1000), 20 +r);
+	        series1.add(new Date(value+k*1000), r);
 	      }
 	      dataset1.addSeries(series1);
 	    }
